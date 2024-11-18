@@ -2,18 +2,21 @@
 
 ### Build
 
-```bash
+```console
 $ $JAVA_HOME/bin/javac src/java/io/simonis/InstrumentationTest.java
 $ $JAVA_HOME/bin/javac src/java/io/simonis/agent/JavaAgent.java
-$ $JAVA_HOME/bin/jar -c -f JavaAgent.jar -m src/java/manifest.mf -C src/java/ io/simonis/agent/
-$ g++ -fPIC -shared -I $JAVA_HOME/include/ -I $JAVA_HOME/include/linux/ -o jvmtiAgent.so src/jvmti/jvmtiAgent.cpp
+$ $JAVA_HOME/bin/jar -c -f JavaAgent.jar -m src/java/manifest.mf \
+                     -C src/java/ io/simonis/agent/
+$ g++ -fPIC -shared -I $JAVA_HOME/include/ -I $JAVA_HOME/include/linux/ \
+      -o jvmtiAgent.so src/jvmti/jvmtiAgent.cpp
 ```
 
 ### Run
 
-```bash
+```console
 $ $JAVA_HOME/bin/java -agentpath:./jvmtiAgent.so=a -javaagent:JavaAgent.jar=b \
-                      -agentpath:./jvmtiAgent.so=c -javaagent:JavaAgent.jar=d -cp src/java io.simonis.InstrumentationTest
+                      -agentpath:./jvmtiAgent.so=c -javaagent:JavaAgent.jar=d \
+                      -cp src/java io.simonis.InstrumentationTest
 JVMTI - agent  a for  io/simonis/InstrumentationTest installed
 JVMTI - agent  c for  io/simonis/InstrumentationTest installed
 JVMTI - VMInit a
